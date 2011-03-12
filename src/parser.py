@@ -86,7 +86,7 @@ class Parser:
                 print d
                 print cjson.encode(tweet)
                 
-                service, url = 'twitpic', 
+                service, url = 'twitpic', ''
                 if len(tweet['entities']['urls'])>0: url = tweet['entities']['urls'][0]['url']
                 else:
                     for service, parseMethod in services.iteritems():
