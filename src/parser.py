@@ -76,7 +76,7 @@ class Parser:
             for tweet in Utilities.iterateTweetsFromFile(Settings.japan_pics_folder+'tweets/'+f):
                 d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                 print d
-                service, url = 'twitpic', tweet['entities']['urls']['url']
+                service, url = 'twitpic', tweet['entities']['urls'][0]['url']
                 if service in url:
                     id = url.split('/')[-1]
                     fileName = Settings.japan_pics_folder+Utilities.getDataFile(d)+'/%s_%s'%(str(d).replace(' ', '_'), id)
