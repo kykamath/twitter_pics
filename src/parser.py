@@ -3,9 +3,10 @@ Created on Mar 11, 2011
 
 @author: kykamath
 '''
-import cjson, sys, gzip
+import cjson, sys, gzip, os, time
 from settings import Settings
 from datetime import datetime
+from lxml.html import parse
 
 class Utilities:
     @staticmethod
@@ -21,6 +22,13 @@ class Utilities:
                 if 'text' in data: yield data
             except: pass
     @staticmethod
+    def iterateTweetsFromFile(file):
+        for line in open(file): 
+            try:
+                data = cjson.decode(line)
+                if 'text' in data: yield data
+            except: pass
+    @staticmethod
     def writeToFileAsJson(data, file):
         try:
             f = open('%s'%file, 'a')
@@ -30,6 +38,15 @@ class Utilities:
     @staticmethod
     def getDataFile(t):
         return '_'.join([str(t.year), str(t.month), str(t.day)])
+    
+class HTMLParsers:
+    @staticmethod
+    def parseTwitpic(url, output_file):
+        doc = parse(url).getroot()
+        row = doc.cssselect('#photo-display')[0]
+        os.system('curl "%s" > %s'%(row.get('src'), output_file))
+            
+            
 
 class Parser:
     @staticmethod
@@ -53,7 +70,19 @@ class Parser:
                     for k in keywords:
                         if k in tweet['text']: 
                             print cjson.encode(tweet)
+    @staticmethod
+    def downloadImages():
+        for f in ['2011_3_10', '2011_3_11', '2011_3_12']:
+            for tweet in Utilities.iterateTweetsFromGzip(Settings.japan_pics_folder+'tweets/'+f):
+                d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
+                print d
+                service, url = 'twitpic', tweet['urls']['url']
+                if service in url:
+                    id = url.split('/')[-1]
+                    fileName = Settings.japan_pics_folder+Utilities.getDataFile(d)+'/%s_%s'%(str(d).replace(' ', '_'), id)
+                    HTMLParsers.parseTwitpic(url, fileName)
+                    time.sleep(3)
                     
 if __name__ == '__main__':
 #    Parser.getTweetsForJapan()
-    Parser.searchKeywords()
+    Parser.downloadImages()
