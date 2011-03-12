@@ -36,13 +36,14 @@ class Parser:
     def getTweetsForJapan():
         japan_bb=[30, 42, 129, 145]
         for f in ['2011_3_11.gz']:
-            for tweet in Utilities.iterateTweetsFromGzip(Settings.filter_folder+f):
+            for tweet in Utilities.iterateTweetsFromGzip(Settings.geo_folder+f):
                 if Utilities.tweetInBoundingBox(tweet, japan_bb):
                     for site in Settings.pic_sites:
                         if site in tweet['text']: 
                             d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                             print d
                             Utilities.writeToFileAsJson(tweet, Settings.japan_pics_folder+'tweets/'+Utilities.getDataFile(d))
+    1
 
 if __name__ == '__main__':
     Parser.getTweetsForJapan()
