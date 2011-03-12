@@ -28,7 +28,8 @@ class Parser:
         for f in ['2011_3_10.gz']:
             for tweet in Utilities.iterateTweetsFromGzip(Settings.filter_folder+f):
                 if Utilities.tweetInBoundingBox(tweet, japan_bb):
-                    print cjson.encode(tweet)
+                    if 'http' in tweet['text']:
+                        print cjson.encode(tweet)
 
 if __name__ == '__main__':
     Parser.getTweetsForJapan()
