@@ -73,7 +73,7 @@ class Parser:
     @staticmethod
     def downloadImages():
         for f in ['2011_3_10', '2011_3_11', '2011_3_12']:
-            for tweet in Utilities.iterateTweetsFromGzip(Settings.japan_pics_folder+'tweets/'+f):
+            for tweet in Utilities.iterateTweetsFromFile(Settings.japan_pics_folder+'tweets/'+f):
                 d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                 print d
                 service, url = 'twitpic', tweet['urls']['url']
