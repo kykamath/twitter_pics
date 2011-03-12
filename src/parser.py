@@ -45,8 +45,15 @@ class HTMLParsers:
         doc = parse(url).getroot()
         row = doc.cssselect('#photo-display')[0]
         os.system('curl "%s" > %s'%(row.get('src'), output_file))
-            
-            
+    @staticmethod
+    def parseYfrog(url, output_file):
+        doc = parse(url).getroot()
+        row = doc.cssselect('#main_image')[0]
+        os.system('curl "%s" > %s'%(row.get('src'), output_file))
+    @staticmethod
+    def parseTwitrpix(url, output_file):
+        id = url.split('/')[-1]
+        os.system('curl "http://img.twitrpix.com/%s" > %s'%(id, output_file))
 
 class Parser:
     @staticmethod
@@ -72,18 +79,24 @@ class Parser:
                             print cjson.encode(tweet)
     @staticmethod
     def downloadImages():
+        services = {'twitpic': HTMLParsers.parseTwitpic, 'yfrog': HTMLParsers.parseYfrog, 'twitrpix': HTMLParsers.parseTwitrpix}
         for f in ['2011_3_10', '2011_3_11', '2011_3_12']:
             for tweet in Utilities.iterateTweetsFromFile(Settings.japan_pics_folder+'tweets/'+f):
                 d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                 print d
                 service, url = 'twitpic', tweet['entities']['urls'][0]['url']
-                if service in url:
-                    id = url.split('/')[-1]
-                    fileName = Settings.japan_pics_folder+Utilities.getDataFile(d)+'/%s_%s'%(str(d).replace(' ', '_'), id)
-                    print fileName
-                    HTMLParsers.parseTwitpic(url, fileName)
-                    time.sleep(3)
+                for service, parseMethod in services.iteritems():
+                    if service in url:
+                        id = tweet['id']
+                        fileName = Settings.japan_pics_folder+Utilities.getDataFile(d)+'/%s_%s'%(str(d).replace(' ', '_'), id)
+                        print fileName
+                        parseMethod(url, fileName)
+                        time.sleep(3)
                     
 if __name__ == '__main__':
 #    Parser.getTweetsForJapan()
     Parser.downloadImages()
+#    url = 'http://twitrpix.com/dnl9'
+#    id = url.split('/')[-1]
+#    file = '/home/kykamath/temp/id.jpeg'
+#    HTMLParsers.parseTwitrpix(url, file)
