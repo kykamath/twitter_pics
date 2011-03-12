@@ -7,4 +7,4 @@ class Settings:
     filter_folder = '/mnt/chevron/kykamath/data/twitter/filter/'
     japan_folder = '/mnt/chevron/kykamath/data/twitter/extra/japan'
     
-    pic_sites = ['twitpic', 'ow.ly', 'yfrog', 'twitrpix']
+    pic_sites = ['twitpic', 'yfrog', 'twitrpix']
