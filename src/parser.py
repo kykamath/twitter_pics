@@ -5,6 +5,7 @@ Created on Mar 11, 2011
 '''
 import cjson, sys, gzip
 from settings import Settings
+from datetime import datetime
 
 class Utilities:
     @staticmethod
@@ -19,7 +20,16 @@ class Utilities:
                 data = cjson.decode(line)
                 if 'text' in data: yield data
             except: pass
-
+    @staticmethod
+    def writeToFileAsJson(data, file):
+        try:
+            f = open('%s'%file, 'a')
+            f.write(cjson.encode(data)+'\n')
+            f.close()
+        except: pass
+    @staticmethod
+    def getDataFile(t):
+        return '_'.join([str(t.year), str(t.month), str(t.day)])
 
 class Parser:
     @staticmethod
@@ -29,7 +39,10 @@ class Parser:
             for tweet in Utilities.iterateTweetsFromGzip(Settings.filter_folder+f):
                 if Utilities.tweetInBoundingBox(tweet, japan_bb):
                     for site in Settings.pic_sites:
-                        if site in tweet['text']: print site, cjson.encode(tweet)
+                        if site in tweet['text']: 
+                            d = datetime.strptime(object['created_at'], Settings.twitter_api_time_format)
+                            print d
+                            Utilities.writeToFileAsJson(tweet, Settings.japan_pics_folder+'tweets/'+Utilities.getDataFile(d))
 
 if __name__ == '__main__':
     Parser.getTweetsForJapan()
