@@ -40,7 +40,7 @@ class Parser:
                 if Utilities.tweetInBoundingBox(tweet, japan_bb):
                     for site in Settings.pic_sites:
                         if site in tweet['text']: 
-                            d = datetime.strptime(object['created_at'], Settings.twitter_api_time_format)
+                            d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                             print d
                             Utilities.writeToFileAsJson(tweet, Settings.japan_pics_folder+'tweets/'+Utilities.getDataFile(d))
 
