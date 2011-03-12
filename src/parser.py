@@ -80,6 +80,7 @@ class Parser:
                 if service in url:
                     id = url.split('/')[-1]
                     fileName = Settings.japan_pics_folder+Utilities.getDataFile(d)+'/%s_%s'%(str(d).replace(' ', '_'), id)
+                    print fileName
                     HTMLParsers.parseTwitpic(url, fileName)
                     time.sleep(3)
                     
