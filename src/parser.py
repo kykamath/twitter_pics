@@ -45,13 +45,14 @@ class Parser:
                             Utilities.writeToFileAsJson(tweet, Settings.japan_pics_folder+'tweets/'+Utilities.getDataFile(d))
     @staticmethod
     def searchKeywords():
-        keyword = sys.argv[1]
+        keywords = sys.argv[1:]
         japan_bb=[30, 42, 129, 145]
         for f in ['2011_3_10.gz', '2011_3_11.gz']:
             for tweet in Utilities.iterateTweetsFromGzip(Settings.geo_folder+f):
                 if Utilities.tweetInBoundingBox(tweet, japan_bb):
-                    if keyword in tweet['text']: 
-                        print cjson.encode(tweet)
+                    for k in keywords:
+                        if k in tweet['text']: 
+                            print cjson.encode(tweet)
                     
 if __name__ == '__main__':
 #    Parser.getTweetsForJapan()
