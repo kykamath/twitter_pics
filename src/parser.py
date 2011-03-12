@@ -96,6 +96,7 @@ class Parser:
                                     url = term
                                     break
                 url = url.replace('\\', '')
+                if not url.startswith('http'): url = 'http://'+url
                 for service, parseMethod in services.iteritems():
                     if service in url:
                         id = tweet['id']
@@ -109,10 +110,11 @@ class Parser:
 if __name__ == '__main__':
 #    Parser.getTweetsForJapan()
     Parser.downloadImages()
-#    url = 'http://twitrpix.com/dnl9'
+#    url = 'twitpic.com/481dd2'
+#    if not url.startswith('http'): url = 'http://'+url
 #    id = url.split('/')[-1]
 #    file = '/home/kykamath/temp/id.jpeg'
-#    HTMLParsers.parseTwitrpix(url, file)
+#    HTMLParsers.parseTwitpic(url, file)
 #    url = 'http:\/\/yfrog.com\/gzcitphj'
 #    print url.replace('\\', '')
 #    d = datetime.now()
