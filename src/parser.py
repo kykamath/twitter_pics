@@ -104,13 +104,19 @@ class Parser:
                         print url, fileName
                         folder = '/'.join(fileName.split('/')[:-1])
                         if not os.path.exists(folder): os.makedirs(folder, 0777)
-                        parseMethod(url, fileName)
-                        time.sleep(3)
+                        if not os.path.exists(fileName):
+                            retry, notParsed = 0, True
+                            while retry<3 and notParsed:
+                                try:
+                                    parseMethod(url, fileName)
+                                    notParsed = False
+                                    time.sleep(3)
+                                except: retry+=1
                     
 if __name__ == '__main__':
 #    Parser.getTweetsForJapan()
     Parser.downloadImages()
-#    url = 'twitpic.com/481dd2'
+#    url = 'http://twitpic.com/4823uh'
 #    if not url.startswith('http'): url = 'http://'+url
 #    id = url.split('/')[-1]
 #    file = '/home/kykamath/temp/id.jpeg'
