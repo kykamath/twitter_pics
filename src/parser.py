@@ -77,7 +77,7 @@ class Parser:
                 d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                 print d
                 print cjson.encode(tweet)
-                service, url = 'twitpic', tweet['urls']['url']
+                service, url = 'twitpic', tweet['entities']['urls']['url']
                 if service in url:
                     id = url.split('/')[-1]
                     fileName = Settings.japan_pics_folder+Utilities.getDataFile(d)+'/%s_%s'%(str(d).replace(' ', '_'), id)
