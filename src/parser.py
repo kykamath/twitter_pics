@@ -85,13 +85,22 @@ class Parser:
                 d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                 print d
                 print cjson.encode(tweet)
-                service, url = 'twitpic', tweet['entities']['urls'][0]['url']
+                
+                service, url = 'twitpic', 
+                if len(tweet['entities']['urls'])>0: url = tweet['entities']['urls'][0]['url']
+                else:
+                    for service, parseMethod in services.iteritems():
+                        if service in tweet['text']:
+                            for term in tweet['text'].split():
+                                if service in term: 
+                                    url = term
+                                    break
                 url = url.replace('\\', '')
                 for service, parseMethod in services.iteritems():
                     if service in url:
                         id = tweet['id']
                         fileName = Settings.japan_pics_folder+Utilities.getDataFile(d)+'/%s_%s.jpeg'%(str(d).replace(' ', '_'), id)
-                        print fileName
+                        print url, fileName
                         folder = '/'.join(fileName.split('/')[:-1])
                         if not os.path.exists(folder): os.makedirs(folder, 0777)
                         parseMethod(url, fileName)
