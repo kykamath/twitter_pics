@@ -59,7 +59,8 @@ class Parser:
     @staticmethod
     def getTweetsForJapan():
         japan_bb=[30, 42, 129, 145]
-        for f in glob.glob1(Settings.geo_folder, '*'):
+#        for f in glob.glob1(Settings.geo_folder, '*'):
+        for f in ['2011_3_%s.gz'%i for i in range(5, 16)]:
             for tweet in Utilities.iterateTweetsFromGzip(Settings.geo_folder+f):
                 if Utilities.tweetInBoundingBox(tweet, japan_bb):
                     for site in Settings.pic_sites:
