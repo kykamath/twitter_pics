@@ -3,7 +3,7 @@ Created on Mar 11, 2011
 
 @author: kykamath
 '''
-import cjson, sys, gzip, os, time
+import cjson, sys, gzip, os, time, glob
 from settings import Settings
 from datetime import datetime
 from lxml.html import parse
@@ -59,7 +59,7 @@ class Parser:
     @staticmethod
     def getTweetsForJapan():
         japan_bb=[30, 42, 129, 145]
-        for f in ['2011_3_10.gz']:
+        for f in glob.glob1(Settings.geo_folder, '*'):
             for tweet in Utilities.iterateTweetsFromGzip(Settings.geo_folder+f):
                 if Utilities.tweetInBoundingBox(tweet, japan_bb):
                     for site in Settings.pic_sites:
@@ -114,19 +114,5 @@ class Parser:
                                 except: retry+=1
                     
 if __name__ == '__main__':
-#    Parser.getTweetsForJapan()
-    Parser.downloadImages()
-#    url = 'http://twitpic.com/4823uh'
-#    if not url.startswith('http'): url = 'http://'+url
-#    id = url.split('/')[-1]
-#    file = '/home/kykamath/temp/id.jpeg'
-#    HTMLParsers.parseTwitpic(url, file)
-#    url = 'http:\/\/yfrog.com\/gzcitphj'
-#    print url.replace('\\', '')
-#    d = datetime.now()
-#    id = 1
-#    fileName = '/home/kykamath/temp/'+Utilities.getDataFile(d)+'/%s_%s'%(str(d).replace(' ', '_'), id)
-#    print fileName
-#    folder = '/'.join(fileName.split('/')[:-1])
-#    if not os.path.exists(folder): os.makedirs(folder, 0777)
-    
+    Parser.getTweetsForJapan()
+#    Parser.downloadImages()
