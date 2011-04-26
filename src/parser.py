@@ -69,6 +69,18 @@ class Parser:
                             print d
                             Utilities.writeToFileAsJson(tweet, Settings.japan_pics_folder+'tweets/'+Utilities.getDataFile(d))
     @staticmethod
+    def getTweetsForNewZealand():
+        nz_bb=[[-34.0, 165.0, -48.0, 179.0]]
+#        for f in glob.glob1(Settings.geo_folder, '*'):
+        for f in ['2011_2_%s.gz'%i for i in range(20, 26)]:
+            for tweet in Utilities.iterateTweetsFromGzip(Settings.geo_folder+f):
+                if Utilities.tweetInBoundingBox(tweet, nz_bb):
+                    for site in Settings.pic_sites:
+                        if site in tweet['text']: 
+                            d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
+                            print d
+                            Utilities.writeToFileAsJson(tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d))
+    @staticmethod
     def searchKeywords():
         keywords = sys.argv[1:]
         japan_bb=[30, 42, 129, 145]
@@ -115,5 +127,7 @@ class Parser:
                                 except: retry+=1
                     
 if __name__ == '__main__':
-    Parser.getTweetsForJapan()
+#    Parser.getTweetsForJapan()
+    Parser.getTweetsForNewZealand()
+    
 #    Parser.downloadImages()
