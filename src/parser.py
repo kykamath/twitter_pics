@@ -80,7 +80,7 @@ class Parser:
                             d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                             print d
                             print tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d)
-#                            Utilities.writeToFileAsJson(tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d))
+                            Utilities.writeToFileAsJson(tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d))
     @staticmethod
     def searchKeywords():
         keywords = sys.argv[1:]
