@@ -30,11 +30,11 @@ class Utilities:
             except: pass
     @staticmethod
     def writeToFileAsJson(data, file):
-        try:
-            f = open('%s'%file, 'a')
-            f.write(cjson.encode(data)+'\n')
-            f.close()
-        except: pass
+#        try:
+        f = open('%s'%file, 'a')
+        f.write(cjson.encode(data)+'\n')
+        f.close()
+#        except: pass
     @staticmethod
     def getDataFile(t):
         return '_'.join([str(t.year), str(t.month), str(t.day)])
