@@ -30,11 +30,11 @@ class Utilities:
             except: pass
     @staticmethod
     def writeToFileAsJson(data, file):
-#        try:
-        f = open('%s'%file, 'a')
-        f.write(cjson.encode(data)+'\n')
-        f.close()
-#        except: pass
+        try:
+            f = open('%s'%file, 'a')
+            f.write(cjson.encode(data)+'\n')
+            f.close()
+        except: pass
     @staticmethod
     def getDataFile(t):
         return '_'.join([str(t.year), str(t.month), str(t.day)])
@@ -79,7 +79,7 @@ class Parser:
                         if site in tweet['text']: 
                             d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                             print d
-                            print tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d)
+#                            print tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d)
                             Utilities.writeToFileAsJson(tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d))
     @staticmethod
     def searchKeywords():
