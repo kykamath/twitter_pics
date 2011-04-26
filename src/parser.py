@@ -10,7 +10,7 @@ from lxml.html import parse
 
 class Utilities:
     @staticmethod
-    def tweetInBoundingBox(tweet, bb=[30, 42, 129, 145]):                                                                                                                                            
+    def tweetInBoundingBox(tweet, bb):                                                                                                                                            
         if not tweet.get('coordinates'): return False                                                                                                                        
         lng,lat = tweet['coordinates']['coordinates']                                                                                                                    
         if bb[0]<lat<bb[1] and bb[2]<lng<bb[3]: return True
@@ -70,7 +70,7 @@ class Parser:
                             Utilities.writeToFileAsJson(tweet, Settings.japan_pics_folder+'tweets/'+Utilities.getDataFile(d))
     @staticmethod
     def getTweetsForNewZealand():
-        nz_bb=[-34.0, 165.0, -48.0, 179.0]
+        nz_bb=[-48.0, -32.0, 165.0, 179.0]
 #        for f in glob.glob1(Settings.geo_folder, '*'):
         for f in ['2011_2_%s.gz'%i for i in range(20, 26)]:
             for tweet in Utilities.iterateTweetsFromGzip(Settings.geo_folder+f):
