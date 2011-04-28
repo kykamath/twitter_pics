@@ -10,4 +10,4 @@ class Settings:
     new_zealand_pics_folder ='/mnt/chevron/kykamath/data/twitter/twitter_pics/new_zealand/'
     twitter_api_time_format = '%a %b %d %H:%M:%S +0000 %Y'
     
-    pic_sites = ['twitpic', 'twitrpix']
+    pic_sites = ['twitpic', 'twitrpix', 'plixi', 'yfrog', 'ow.ly']
