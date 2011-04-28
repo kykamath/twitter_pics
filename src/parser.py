@@ -94,7 +94,7 @@ class Parser:
     @staticmethod
     def downloadImages():
         services = {'twitpic': HTMLParsers.parseTwitpic, 'yfrog': HTMLParsers.parseYfrog, 'twitrpix': HTMLParsers.parseTwitrpix}
-        for f in ['2011_3_10', '2011_3_11', '2011_3_12']:
+        for f in ['2011_2_%s'%i for i in range(20, 26)]:
             for tweet in Utilities.iterateTweetsFromFile(Settings.new_zealand_pics_folder+'tweets/'+f):
                 d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                 print d
