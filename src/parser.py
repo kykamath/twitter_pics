@@ -73,7 +73,7 @@ class Parser:
         nz_bb=[-48.0, -32.0, 165.0, 179.0]
 #        for f in glob.glob1(Settings.geo_folder, '*'):
         for f in ['2011_2_%s.gz'%i for i in range(20, 26)]:
-            for tweet in Utilities.iterateTweetsFromGzip(Settings.filter_folder+f):
+            for tweet in Utilities.iterateTweetsFromGzip(Settings.geo_folder+f):
                 if Utilities.tweetInBoundingBox(tweet, nz_bb):
                     for site in Settings.pic_sites:
                         if site in tweet['text']: 
