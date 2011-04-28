@@ -95,7 +95,7 @@ class Parser:
     def downloadImages():
         services = {'twitpic': HTMLParsers.parseTwitpic, 'yfrog': HTMLParsers.parseYfrog, 'twitrpix': HTMLParsers.parseTwitrpix}
         for f in ['2011_3_10', '2011_3_11', '2011_3_12']:
-            for tweet in Utilities.iterateTweetsFromFile(Settings.japan_pics_folder+'tweets/'+f):
+            for tweet in Utilities.iterateTweetsFromFile(Settings.new_zealand_pics_folder+'tweets/'+f):
                 d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                 print d
                 print cjson.encode(tweet)
@@ -114,7 +114,7 @@ class Parser:
                 for service, parseMethod in services.iteritems():
                     if service in url:
                         id = tweet['id']
-                        fileName = Settings.japan_pics_folder+Utilities.getDataFile(d)+'/%s_%s.jpeg'%(str(d).replace(' ', '_'), id)
+                        fileName = Settings.new_zealand_pics_folder+Utilities.getDataFile(d)+'/%s_%s.jpeg'%(str(d).replace(' ', '_'), id)
                         print url, fileName
                         folder = '/'.join(fileName.split('/')[:-1])
                         if not os.path.exists(folder): os.makedirs(folder, 0777)
@@ -129,6 +129,6 @@ class Parser:
                     
 if __name__ == '__main__':
 #    Parser.getTweetsForJapan()
-    Parser.getTweetsForNewZealand()
+#    Parser.getTweetsForNewZealand()
     
-#    Parser.downloadImages()
+    Parser.downloadImages()
