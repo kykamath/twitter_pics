@@ -67,6 +67,7 @@ class Parser:
                         if site in tweet['text']: 
                             d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                             print d
+                            print tweet, Settings.japan_pics_folder+'tweets/'+Utilities.getDataFile(d)
                             Utilities.writeToFileAsJson(tweet, Settings.japan_pics_folder+'tweets/'+Utilities.getDataFile(d))
     @staticmethod
     def getTweetsForNewZealand():
