@@ -79,7 +79,7 @@ class Parser:
                         if site in tweet['text']: 
                             d = datetime.strptime(tweet['created_at'], Settings.twitter_api_time_format)
                             print d
-                            print tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d)
+#                            print tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d)
                             Utilities.writeToFileAsJson(tweet, Settings.new_zealand_pics_folder+'tweets/'+Utilities.getDataFile(d))
     @staticmethod
     def searchKeywords():
